@@ -133,6 +133,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\LIBS\glad\src\glad.c" />
+    <ClCompile Include="GLAgain.cpp" />
     <ClCompile Include="GLStuff.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
