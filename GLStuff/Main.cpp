@@ -116,11 +116,19 @@ int main(int argc, char **argv) {
 		0.0f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f
 
 	};
+	
+	const uint32_t triIndicies[]{
+		0, 1, 2,
+		1, 2, 3
+	};
 
 	uint32_t vtxBufferObject;
 	glGenBuffers(1, &vtxBufferObject);
 	glBindBuffer(GL_ARRAY_BUFFER, vtxBufferObject);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(triVerts), triVerts, GL_STATIC_DRAW);
+
+	
+
 
 	uint32_t vtxArrayObject; 
 	glGenVertexArrays(1, &vtxArrayObject);
@@ -135,6 +143,18 @@ int main(int argc, char **argv) {
 	
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //wireframe
+
+
+	// Allows reuse of vertecies by specifying an array of indicies. 
+	uint32_t elementBufferObject;
+	glGenBuffers(1, &elementBufferObject);
+
+	//must be bound after VAO is bound. For VBO, binding to VAO happens with glVertexAttribPointer()
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObject); 
+	
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(triIndicies), triIndicies, GL_STATIC_DRAW);
+
 
 	uint8_t adjusted = 0;
 	
@@ -145,14 +165,13 @@ int main(int argc, char **argv) {
 
 		
 
-		
-		
-
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glDrawArrays(GL_TRIANGLES, 0, 3);
-		glDrawArrays(GL_TRIANGLES, 1, 3);
-		
+//		glDrawArrays(GL_TRIANGLES, 0, 3);
+//		glDrawArrays(GL_TRIANGLES, 1, 3);
+
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
 	
 
 		glfwSwapBuffers(wnd);
