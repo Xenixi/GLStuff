@@ -1,0 +1,8 @@
+*.exe
+*.pdb
+*.ilk
+*.idb
+*.obj
+*.o
+*.Obj
+x64/*
