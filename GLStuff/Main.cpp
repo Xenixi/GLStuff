@@ -110,10 +110,10 @@ int main(int argc, char **argv) {
 
 	const float triVerts[]{
 		
-		0.0f, 0.75f, 0.0f,
-		0.0f, 0.0f, 0.0f,
-		0.75f, 0.0f, 0.0f,
-		0.0f, -0.5f, 0.0f,
+		0.0f, 0.75f, 0.0f, 1.0f, 0.0f, 1.0f,
+		0.0f, 0.0f, 0.0f,  1.0f, 0.0f, 0.0f,
+		0.75f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
+		0.0f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f
 
 	};
 
@@ -126,14 +126,15 @@ int main(int argc, char **argv) {
 	glGenVertexArrays(1, &vtxArrayObject);
 	glBindVertexArray(vtxArrayObject);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
 	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
 
 	glUseProgram(shaderProgram);
 	
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-	uint32_t uniformAssignedLoc = glGetUniformLocation(shaderProgram, "adjusted");
 
 	uint8_t adjusted = 0;
 	
@@ -142,12 +143,8 @@ int main(int argc, char **argv) {
 	while (!glfwWindowShouldClose(wnd)) {
 	
 
-		if (glfwGetTime() - time >= 0.02f) {
-			adjusted += 5;
-			time = glfwGetTime();
-		}
+		
 
-		glUniform1f(uniformAssignedLoc, fabsf(2.0f * ((float_t)adjusted / std::numeric_limits<uint8_t>::max()) - 1.0f));
 		
 		
 
