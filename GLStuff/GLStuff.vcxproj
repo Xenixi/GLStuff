@@ -141,10 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\LIBS\glad\src\glad.c" />
-    <ClCompile Include="Test.cpp" />
-    <ClCompile Include="TestAgain.cpp" />
-    <ClCompile Include="TestingMyself.cpp" />
-    <ClCompile Include="TheTest.cpp" />
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="frg.frag" />
