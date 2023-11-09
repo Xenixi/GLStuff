@@ -6,6 +6,7 @@
 #include <fstream>
 #include <math.h>
 #include <limits>
+#include "stb_image.h"
 
 int main(int argc, char **argv) {
 
@@ -15,7 +16,7 @@ int main(int argc, char **argv) {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow *wnd = glfwCreateWindow(1280, 720 , "Hey :)", nullptr, nullptr);
+	GLFWwindow *wnd = glfwCreateWindow(720, 720 , "Hey :)", nullptr, nullptr);
 
 	if (wnd == NULL) {
 		std::cout << "Failed to create window. Process terminating..." << std::endl;
@@ -31,7 +32,7 @@ int main(int argc, char **argv) {
 		return -1;
 	}
 
-	glViewport(0,0,1280,720);
+	glViewport(0,0,720,720);
 
 	// Shaders
 
@@ -110,19 +111,17 @@ int main(int argc, char **argv) {
 
 	const float triVerts[]{
 		
-		0.0f, 0.75f, 0.0f, 1.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 0.0f,  1.0f, 0.0f, 0.0f,
-		0.75f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
-		0.0f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f,
-		0.2f, -0.8f, 0.0f, 1.0f, 0.0f, 1.0f,
+		-0.5f, 0.5f, 0.0f,    -1.0f, 1.0f, 1.0f,  //get rid of the z 
+		0.5f, 0.5f, 0.0f,     0.0f, 1.0f, 1.0f,
+		-0.5f, -0.5f, 0.0f,   -1.0f, 0.0f, 1.0f,
+		0.5f, -0.5f, 0.0f,    0.0f, 0.0f, 1.0f,
 
 
 	};
 	
 	const uint32_t triIndicies[]{
 		0, 1, 2,
-		1, 2, 3,
-		4, 3, 2,
+		1, 2, 3
 	};
 
 	uint32_t vtxBufferObject;
@@ -139,6 +138,7 @@ int main(int argc, char **argv) {
 	
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
+
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 
@@ -158,10 +158,45 @@ int main(int argc, char **argv) {
 	
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(triIndicies), triIndicies, GL_STATIC_DRAW);
 
+	// TEXTURE
+
+	
+
+	int32_t tWidth, tHeight, tChannels;
+
+	unsigned char *imageData = stbi_load("c:/users/kobes/onedrive/desktop/texture.jpg", &tWidth, &tHeight, &tChannels, 0);
+
+	if (imageData == NULL) {
+		std::cout << "ERROR LOADING TEXTURE" << std::endl;
+	}
+
+	uint32_t texture;
+
+	glGenTextures(1, &texture);
+
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
+	stbi_image_free(imageData);
+
+	////
 
 	uint8_t adjusted = 0;
 	
 	double_t time = glfwGetTime();
+
+	glBindTexture(GL_TEXTURE_2D, texture);
 
 	while (!glfwWindowShouldClose(wnd)) {
 	
@@ -173,7 +208,9 @@ int main(int argc, char **argv) {
 //		glDrawArrays(GL_TRIANGLES, 0, 3);
 //		glDrawArrays(GL_TRIANGLES, 1, 3);
 
-		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
+
+		
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 	
 

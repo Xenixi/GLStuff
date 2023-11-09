@@ -16,12 +16,18 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{dbf48cc5-ac1a-40f3-9de7-401fa52772aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Textures">
+      <UniqueIdentifier>{6480cd63-b0e7-4472-91c8-d7c80c27eecd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\LIBS\glad\src\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stb_image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,5 +38,18 @@
     <None Include="frg.frag">
       <Filter>Shaders</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stb_image.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\OneDrive\Desktop\texture.png">
+      <Filter>Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\OneDrive\Desktop\texture.jpg">
+      <Filter>Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>
