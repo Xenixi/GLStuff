@@ -113,13 +113,16 @@ int main(int argc, char **argv) {
 		0.0f, 0.75f, 0.0f, 1.0f, 0.0f, 1.0f,
 		0.0f, 0.0f, 0.0f,  1.0f, 0.0f, 0.0f,
 		0.75f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
-		0.0f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f
+		0.0f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f,
+		0.2f, -0.8f, 0.0f, 1.0f, 0.0f, 1.0f,
+
 
 	};
 	
 	const uint32_t triIndicies[]{
 		0, 1, 2,
-		1, 2, 3
+		1, 2, 3,
+		4, 3, 2,
 	};
 
 	uint32_t vtxBufferObject;
@@ -127,13 +130,13 @@ int main(int argc, char **argv) {
 	glBindBuffer(GL_ARRAY_BUFFER, vtxBufferObject);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(triVerts), triVerts, GL_STATIC_DRAW);
 
-	
-
 
 	uint32_t vtxArrayObject; 
 	glGenVertexArrays(1, &vtxArrayObject);
 	glBindVertexArray(vtxArrayObject);
 
+
+	
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
 	glEnableVertexAttribArray(0);
@@ -143,7 +146,7 @@ int main(int argc, char **argv) {
 	
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //wireframe
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); //wireframe
 
 
 	// Allows reuse of vertecies by specifying an array of indicies. 
@@ -170,7 +173,7 @@ int main(int argc, char **argv) {
 //		glDrawArrays(GL_TRIANGLES, 0, 3);
 //		glDrawArrays(GL_TRIANGLES, 1, 3);
 
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
 
 	
 
